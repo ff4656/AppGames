@@ -7,10 +7,15 @@ public class CPlayerController : MonoBehaviour
     private CPlayerCharacter _character;
     public CPlayerCharacter Character { get { return _character; } }
 
+    private CCamera _cam;
+    public CCamera Cam { get { return _cam; } }
+
     private void Start()
     {
-        SetController(GetComponent<CPlayerCharacter>());
+        SetController(GetComponent<CPlayerCharacter>()); ;
     }
+
+    public void InitCam(CCamera cam) { _cam = cam; }
 
     public void SetController(CPlayerCharacter character)
     {
@@ -42,6 +47,9 @@ public class CPlayerController : MonoBehaviour
 
     private void Jump()
     {
+        if (_character.IsJump)
+            return;
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             _character.RigidBody.AddForce(Vector2.up * _character.Jump, ForceMode2D.Impulse);
